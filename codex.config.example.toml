@@ -1,0 +1,9 @@
+[mcp_servers.novada_webunblocker]
+command = "node"
+args = ["C:/Users/user/.codex/skills/novada-webunblocker-skill/dist/index.js"]
+
+[mcp_servers.novada_webunblocker.env]
+NOVADA_WEBUNBLOCKER_ENDPOINT = "https://webunlocker.novada.com/request"
+NOVADA_WEBUNBLOCKER_TIMEOUT_MS = "45000"
+# Optional override:
+# NOVADA_WEBUNBLOCKER_CONFIG_PATH = "C:/Users/user/.novada-webunblocker/config.json"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Novada WebUnblocker"
+  short_description: "Fetch pages via Novada Web Unblocker MCP"
+  default_prompt: "Use Novada Web Unblocker MCP tools to fetch page content with correct params, then return concise structured results."
