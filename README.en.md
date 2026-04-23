@@ -1,9 +1,10 @@
 # Novada Web Unblocker Skill + MCP
 
-开源项目：通过 MCP 工具接入 Novada Web Unblocker API，支持动态渲染抓取、国家代理、等待策略、HTML/PNG 输出。
+Open-source skill for accessing the Novada Web Unblocker API through MCP tools.  
+It supports dynamic JS-rendered scraping, country routing, wait strategies, and HTML/PNG outputs.
 
-- Novada 官网: [https://www.novada.com](https://www.novada.com)
-- Web Unblocker API Endpoint: `https://webunlocker.novada.com/request`
+- Novada website: [https://www.novada.com](https://www.novada.com)
+- Web Unblocker API endpoint: `https://webunlocker.novada.com/request`
 
 ## Features
 
@@ -12,9 +13,9 @@
   - `set_api_key`
   - `get_api_key_status`
   - `clear_api_key`
-- API key 本地持久化（默认路径：`~/.novada-webunblocker/config.json`）
-- 首次调用无 key 时，自动触发 MCP `elicitation` 输入框，用户输入后自动保存本地
-- 不支持输入框的客户端自动回退到 `set_api_key` 流程
+- API key is persisted locally (default path: `~/.novada-webunblocker/config.json`)
+- On first request without a local key, MCP `elicitation` is triggered for key input and auto-save
+- For clients without elicitation UI, use `set_api_key` as fallback
 
 ## Quick Start
 
@@ -23,7 +24,7 @@ npm install
 npm run build
 ```
 
-本地启动：
+Run locally:
 
 ```bash
 npm start
@@ -31,7 +32,7 @@ npm start
 
 ## Codex MCP Config
 
-将如下内容加入 `~/.codex/config.toml`（Windows 路径按实际修改）：
+Add the following to `~/.codex/config.toml` (adjust Windows paths to your environment):
 
 ```toml
 [mcp_servers.novada_webunblocker]
@@ -47,13 +48,13 @@ NOVADA_WEBUNBLOCKER_OUTPUT_DIR = "C:/Users/user/.novada-webunblocker/html"
 
 ## Tool Usage
 
-### 1) 手动配置 API Key（可选）
+### 1) Set API key manually (optional)
 
 ```text
 set_api_key({ "api_key": "YOUR_API_KEY" })
 ```
 
-### 2) 直接抓取（未配置 key 时会弹输入框）
+### 2) Basic scraping request
 
 ```json
 {
@@ -84,7 +85,7 @@ set_api_key({ "api_key": "YOUR_API_KEY" })
 
 ## Save Long HTML To File
 
-When scraping large, JS-rendered pages, use file mode to avoid large inline payloads:
+When scraping large JS-rendered pages, use file mode to avoid oversized inline payloads:
 
 ```json
 {
@@ -104,26 +105,26 @@ When scraping large, JS-rendered pages, use file mode to avoid large inline payl
 ### 1) Quick Prompt (Short)
 
 ```text
-使用 $novada-webunblocker 抓取这个页面：https://www.tiktok.com/shop/pdp/womens-seamless-yoga-jumpsuit-ribbed-square-neck-tight-fit/1731734246290723668，开启 js 渲染，等待元素 #pdp-review-section 加载完成。
+Use $novada-webunblocker to scrape this page: https://www.tiktok.com/shop/pdp/womens-seamless-yoga-jumpsuit-ribbed-square-neck-tight-fit/1731734246290723668, enable JS rendering, and wait until #pdp-review-section is loaded.
 ```
 
 ### 2) Full Prompt (Detailed)
 
 ```text
-请使用 $novada-webunblocker 执行页面抓取，要求如下：
+Please use $novada-webunblocker to scrape a page with the following requirements:
 1. target_url: https://www.tiktok.com/shop/pdp/womens-seamless-yoga-jumpsuit-ribbed-square-neck-tight-fit/1731734246290723668
-2. 开启 JS 渲染（js_render=true）
-3. 等待选择器 #pdp-review-section 出现（wait_selector="#pdp-review-section"）
-4. 将返回格式设为 HTML（response_format="html"）
-5. 启用保存到本地文件（save_html_to_file=true）
-6. 默认不要在响应中返回完整 body（include_body_in_response=false）
+2. Enable JS rendering (js_render=true)
+3. Wait for selector #pdp-review-section (wait_selector="#pdp-review-section")
+4. Return HTML format (response_format="html")
+5. Save HTML to local file (save_html_to_file=true)
+6. Do not include full body in response by default (include_body_in_response=false)
 
-执行后请按下面格式返回结果：
-- 抓取状态码（status）
-- 实际使用的关键参数摘要
-- 保存文件路径（saved_html_file.path）
-- 是否命中等待元素（例如检查 id="pdp-review-section"）
-- 如失败，给出错误原因和下一步建议（如增加 wait_ms、切换 country、补充 headers/cookies）。
+After execution, return:
+- Status code (status)
+- Summary of effective request parameters
+- Saved file path (saved_html_file.path)
+- Whether the waiting selector was matched (for example, id="pdp-review-section")
+- If failed, include root cause and next-step suggestions (such as increasing wait_ms, changing country, or adding headers/cookies).
 ```
 
 ## Dev
@@ -132,3 +133,4 @@ When scraping large, JS-rendered pages, use file mode to avoid large inline payl
 npm run dev
 npm test
 ```
+
